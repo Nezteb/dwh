@@ -1,0 +1,7 @@
+.vscode/
+.idea/
+node_modules/
+
+**/*/.vscode/
+**/*/.idea/
+**/*/node_modules/
