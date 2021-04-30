@@ -27,6 +27,7 @@ services:
   db:
       # We use the predefined Postgres image
       image: postgres:10.4
+      container_name: db
       ports:
         - "5432:5432"
       environment:

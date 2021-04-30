@@ -10,12 +10,12 @@ docker: down
 
 .PHONY: web
 web:
-	docker-compose exec web "sh"
+	docker-compose exec web "bash"
 	# After you have a shell, you can use `iex -S mix phx.server`
 
 .PHONY: test
 test:
-	docker-compose exec test "sh"
+	docker-compose exec test "bash"
 	# After you have a shell, you can use `mix test`
 
 .PHONY: down
