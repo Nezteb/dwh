@@ -10,10 +10,11 @@ WORKDIR /app
 
 # Install hex package manager
 RUN mix local.hex --force
-Run mix local.rebar --force
+RUN mix local.rebar --force
 
 # Compile the project
-RUN mix do compile
+RUN MIX_ENV=dev mix do compile
+RUN MIX_ENV=test mix do compile
 RUN chmod +x /app/entrypoint.sh
 RUN chmod +x /app/test-entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]

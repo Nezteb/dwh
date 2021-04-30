@@ -1,5 +1,8 @@
 #!/bin/bash
 # Docker entrypoint script.
+elixir -v
+export PGPASSWORD=$POSTGRES_PASSWORD # For non-interactive psql commands
+env | sort
 
 # Wait until Postgres is ready
 while ! pg_isready -q -h $POSTGRES_HOST -p 5432 -U $POSTGRES_USER
@@ -11,7 +14,7 @@ do
 done
 
 # Create, migrate, and seed database if it doesn't exist.
-if [[ -z `psql -Atqc "\\list $POSTGRES_DATABASE"` ]]; then
+if [[ -z `psql -h $POSTGRES_HOST -p 5432 -U $POSTGRES_USER -Atqc "\\list $POSTGRES_DATABASE"` ]]; then
   echo "Database $POSTGRES_DATABASE does not exist. Creating..."
   mix ecto.create
   mix ecto.migrate
@@ -19,4 +22,7 @@ if [[ -z `psql -Atqc "\\list $POSTGRES_DATABASE"` ]]; then
   echo "Database $POSTGRES_DATABASE created."
 fi
 
-exec mix test
+# This creates an empty shell so that the Docker container stays alive for the user to start themselves
+# Once they start a shell, they can run `mix phx.server` or `mix test` themselves
+#iex
+exec sh -c 'while true ; do wait ; done'

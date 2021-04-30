@@ -1,35 +1,40 @@
-# Divvy Homework Assignment
+# Homework
 
-This repository provides a starting point for a basic React + GraphQL application.
-All of the configuration boilerplate is complete so you can start by writing the code that you want us to see.
+For backend only applicants, you should only need to deal with files in the `elixir` folder.
 
-Please **fork** this repo a **private repo** on your GitHub account.
+You will need to have postgres running.
+The easiest way to install postgres is through brew:
+`brew install postgres`
 
-Please share your finished project repo with @thawk55 and @lwintch as part of your submission.
+To start your Phoenix server:
 
-<br />
+  * Install dependencies with `mix deps.get`
+  * Create and migrate your database with `mix ecto.setup`
+  * Start Phoenix endpoint with `mix phx.server`
 
-
-## Project Setup
-
-This repository is split into a web app directory (eg `/webapp`) and two server directories (eg `/webserver` and `/elixir`).
-
-The `/webserver` one includes a functional GraphQL server in NodeJS with MongoDB backing it.
-
-The `/elixir` one includes a functional GraphQL server in Elixir with Postgresql backing it.
-
-If you are applying for backend, you should use the elixir code.
-If you are applying for frontend, feel free to use either.
-
-This project is _intentionally not utilizing 3rd party services or create-react-app_ to give you the opportunity to showcase your talents wherever they are, be it the front end or the back end.
-
-## Instructions
-
-If you are pursuing a full stack or backend position, please include elixir code changes in your homework.
-
-See the [Frontend instructions](webapp/README.md) for frontend focused instructions.  If front end only, use the node server in `/webserver`.
-
-See the [Backend instructions](backend.md) for backend focused instructions.
+Now you can visit [`localhost:8000`](http://localhost:8000) from your browser.
+You can use [`localhost:8000/graphiql`](http://localhost:8000/graphiql) to make basic graphql queries from your browser.
 
 
+## Docker
 
+If you want to run this in docker you can do so:
+1. run `docker-compose build` from `/elixir` directory of the app.
+2. run `docker-compose up web` from `/elixir` directory of the app to start the server.
+3. run `docker-compose up test` from `/elixir` directory of the app to run the tests.
+
+
+This can be particularly helpful if you are running on Windows or are having issues getting postgres or elixir running.
+
+Note, you will have to run `docker-compose build` every time you change code.
+
+Also if you just want to run postgres in docker, you can run `docker-compose up db` to just spin up postgres.
+
+## Learn more
+
+  * Official website: https://www.phoenixframework.org/
+  * Guides: https://hexdocs.pm/phoenix/overview.html
+  * Docs: https://hexdocs.pm/phoenix
+  * Forum: https://elixirforum.com/c/phoenix-forum
+  * Source: https://github.com/phoenixframework/phoenix
+  * Absinthe: https://hexdocs.pm/absinthe/overview.html
