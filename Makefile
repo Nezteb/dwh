@@ -41,7 +41,7 @@ dozzle-stop:
 	docker stop dozzle || true
 	docker rm dozzle || true
 
-### Local Development Commands
+### Local Development Commands (or for use in your container)
 
 .PHONY: clean
 clean:
@@ -49,7 +49,8 @@ clean:
 	mix deps.clean --all
 
 .PHONY: setup
-setup: build
+setup: clean
 	# This only needs to be run once
 	mix deps.get
 	mix ecto.create
+	mix ecto.migrate

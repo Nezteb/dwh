@@ -13,6 +13,13 @@ config :homework, HomeworkWeb.Endpoint,
   url: [host: "example.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :homework, Homework.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL"),
+  database: "",
+  ssl: true,
+  pool_size: System.get_env("POOL_SIZE") || 2
+
 # Do not print debug messages in production
 config :logger, level: :info
 
