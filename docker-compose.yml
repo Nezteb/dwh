@@ -6,10 +6,10 @@ services:
     image: web:latest
     container_name: web
     ports:
-      - "8000:8000"
+      - "4000:4000"
     environment:
       - MIX_ENV=dev
-      - PORT=8000
+      - PORT=4000
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=homework_dev
