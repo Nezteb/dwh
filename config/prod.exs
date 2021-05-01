@@ -11,7 +11,8 @@ use Mix.Config
 # before starting your production server.
 config :homework, HomeworkWeb.Endpoint,
   url: [host: System.get_env("HOST_INDEX") || "localhost", port: System.get_env("PORT")],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  force_ssl: [rewrite_on: [:x_forwarded_proto]]
+  #cache_static_manifest: "priv/static/cache_manifest.json"
 
 config :homework, Homework.Repo,
   adapter: Ecto.Adapters.Postgres,
