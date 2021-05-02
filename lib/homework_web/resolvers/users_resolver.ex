@@ -2,24 +2,24 @@ defmodule HomeworkWeb.Resolvers.UsersResolver do
   alias Homework.Users
 
   @doc """
-  Get a list of users
-  """
-  def users(_root, args, _info) do
-    {:ok, Users.list_users(args)}
-  end
-
-  @doc """
   Find users by their first name
   """
-  def search_for_users(_root, %{first_name: first_name} = args, _info) do
+  def users(_root, %{first_name: _first_name} = args, _info) do
     {:ok, Users.search_for_users(args)}
   end
 
   @doc """
   Find users by their last name
   """
-  def search_for_users(_root, %{last_name: last_name} = args, _info) do
+  def users(_root, %{last_name: _last_name} = args, _info) do
     {:ok, Users.search_for_users(args)}
+  end
+
+  @doc """
+  Get a list of users
+  """
+  def users(_root, args, _info) do
+    {:ok, Users.list_users(args)}
   end
 
   @doc """

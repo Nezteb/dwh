@@ -23,7 +23,7 @@ defmodule Homework.ResolversTest do
       conn = build_conn()
       conn = get conn, "/api", query: """
       {
-        searchForUsers(lastName: "mi") {
+        users(lastName: "mi") {
           firstName
           lastName
         }
@@ -31,7 +31,7 @@ defmodule Homework.ResolversTest do
       """
 
       assert json_response(conn, 200) == %{"data" =>
-        %{"searchForUsers" => [
+        %{"users" => [
           %{"firstName" => "John", "lastName" => "Smith"},
           %{"firstName" => "Robert", "lastName" => "Smith"}
         ]}
@@ -42,7 +42,7 @@ defmodule Homework.ResolversTest do
       conn = build_conn()
       conn = get conn, "/api", query: """
       {
-        searchForUsers(firstName: "oh") {
+        users(firstName: "oh") {
           firstName
           lastName
         }
@@ -50,7 +50,7 @@ defmodule Homework.ResolversTest do
       """
 
       assert json_response(conn, 200) == %{"data" =>
-        %{"searchForUsers" => [
+        %{"users" => [
           %{"firstName" => "John", "lastName" => "Smith"},
           %{"firstName" => "John", "lastName" => "Adams"}
         ]}
@@ -61,7 +61,7 @@ defmodule Homework.ResolversTest do
       conn = build_conn()
       conn = get conn, "/api", query: """
       {
-        searchForUsers(firstName: "oh",lastName: "mi") {
+        users(firstName: "oh",lastName: "mi") {
           firstName
           lastName
         }
@@ -69,7 +69,7 @@ defmodule Homework.ResolversTest do
       """
 
       assert json_response(conn, 200) == %{"data" =>
-        %{"searchForUsers" => [
+        %{"users" => [
           %{"firstName" => "John", "lastName" => "Smith"}
         ]}
       }
