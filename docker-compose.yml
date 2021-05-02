@@ -16,9 +16,6 @@ services:
       - POSTGRES_HOST=db
     volumes:
       - .:/app
-      # Don't pull in the deps/build folders: (use `--renew-anon-volumes` to refresh these on restart)
-      - /app/deps/
-      - /app/_build/
     links:
       - db
     depends_on: 

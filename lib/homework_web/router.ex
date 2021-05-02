@@ -1,5 +1,9 @@
 defmodule HomeworkWeb.Router do
   use HomeworkWeb, :router
+  # This dialyzer override fixes this obscure error:
+  # lib/homework_web/router.ex:1:no_return
+  # Function __checks__/0 has no local return.
+  @dialyzer {:no_return, __checks__: 0}
 
   pipeline :api do
     plug(:accepts, ["json"])

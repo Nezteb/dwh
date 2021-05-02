@@ -56,6 +56,10 @@ dozzle-stop:
 format:
 	mix format mix.exs "lib/**/*.{ex,exs}" "test/**/*.{ex,exs}"
 
+.PHONY: lint
+lint:
+	mix dialyzer
+
 .PHONY: clean
 clean:
 	mix clean --deps
