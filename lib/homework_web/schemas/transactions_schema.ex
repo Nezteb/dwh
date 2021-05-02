@@ -54,7 +54,7 @@ defmodule HomeworkWeb.Schemas.TransactionsSchema do
       resolve(&TransactionsResolver.update_transaction/3)
     end
 
-    @desc "delete an existing transaction"
+    @desc "Delete an existing transaction"
     field :delete_transaction, :transaction do
       arg(:id, non_null(:id))
 

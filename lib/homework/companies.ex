@@ -73,6 +73,14 @@ defmodule Homework.Companies do
     |> Repo.update()
   end
 
+  def get_available_credit_for_company(%Company{} = company) do
+    # TODO: Credit line minus total amount of transactions (debits - credits)
+  end
+
+  def get_transaction_total_for_company(%Company{} = company) do
+    # TODO: Ecto sum query here for all transactions
+  end
+
   @doc """
   Deletes a company.
 

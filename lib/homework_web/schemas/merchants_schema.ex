@@ -32,7 +32,7 @@ defmodule HomeworkWeb.Schemas.MerchantsSchema do
       resolve(&MerchantsResolver.update_merchant/3)
     end
 
-    @desc "delete an existing merchant"
+    @desc "Delete an existing merchant"
     field :delete_merchant, :merchant do
       arg(:id, non_null(:id))
 

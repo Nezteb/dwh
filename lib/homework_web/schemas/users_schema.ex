@@ -35,7 +35,7 @@ defmodule HomeworkWeb.Schemas.UsersSchema do
       resolve(&UsersResolver.update_user/3)
     end
 
-    @desc "delete an existing user"
+    @desc "Delete an existing user"
     field :delete_user, :user do
       arg(:id, non_null(:id))
 
