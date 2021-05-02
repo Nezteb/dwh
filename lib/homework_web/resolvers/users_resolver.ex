@@ -5,14 +5,14 @@ defmodule HomeworkWeb.Resolvers.UsersResolver do
   Find users by their first name
   """
   def users(_root, %{first_name: _first_name} = args, _info) do
-    {:ok, Users.search_for_users(args)}
+    {:ok, Users.list_users(args)}
   end
 
   @doc """
   Find users by their last name
   """
   def users(_root, %{last_name: _last_name} = args, _info) do
-    {:ok, Users.search_for_users(args)}
+    {:ok, Users.list_users(args)}
   end
 
   @doc """

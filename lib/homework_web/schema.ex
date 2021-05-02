@@ -12,8 +12,8 @@ defmodule HomeworkWeb.Schema do
   query do
     @desc "Get all Transactions"
     field(:transactions, list_of(:transaction)) do
-      arg :max, non_null(:integer)
-      arg :min, non_null(:integer)
+      arg :max, :integer
+      arg :min, :integer
       resolve(&TransactionsResolver.transactions/3)
     end
 

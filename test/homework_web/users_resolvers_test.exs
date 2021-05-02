@@ -18,7 +18,7 @@ defmodule Homework.ResolversTest do
     :ok
   end
 
-  describe "search_for_users" do
+  describe "search for users by first and/or last name" do
     test "last name only" do
       conn = build_conn()
       conn = get conn, "/api", query: """
