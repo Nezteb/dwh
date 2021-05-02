@@ -8,9 +8,7 @@ defmodule HomeworkWeb.Router do
   scope "/" do
     pipe_through(:api)
 
-    forward("/api", Absinthe.Plug,
-      schema: HomeworkWeb.Schema
-    )
+    forward("/api", Absinthe.Plug, schema: HomeworkWeb.Schema)
 
     forward("/graphiql", Absinthe.Plug.GraphiQL,
       schema: HomeworkWeb.Schema,

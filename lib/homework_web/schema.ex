@@ -12,16 +12,16 @@ defmodule HomeworkWeb.Schema do
   query do
     @desc "Get all Transactions"
     field(:transactions, list_of(:transaction)) do
-      arg :max, :integer
-      arg :min, :integer
+      arg(:max, :integer)
+      arg(:min, :integer)
       resolve(&TransactionsResolver.transactions/3)
     end
 
     @desc "Get all Users"
     field(:users, list_of(:user)) do
       # TODO: Make first and last name search into an optional union type?
-      arg :first_name, :string
-      arg :last_name, :string
+      arg(:first_name, :string)
+      arg(:last_name, :string)
       resolve(&UsersResolver.users/3)
     end
 

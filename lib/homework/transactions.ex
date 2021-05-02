@@ -19,19 +19,22 @@ defmodule Homework.Transactions do
   def list_transactions(%{min: min, max: max}) do
     from(t in Transaction,
       where: t.amount >= ^min and t.amount <= ^max
-    ) |> Repo.all
+    )
+    |> Repo.all()
   end
 
   def list_transactions(%{min: min}) do
     from(t in Transaction,
       where: t.amount >= ^min
-    ) |> Repo.all
+    )
+    |> Repo.all()
   end
 
   def list_transactions(%{max: max}) do
     from(t in Transaction,
       where: t.amount <= ^max
-    ) |> Repo.all
+    )
+    |> Repo.all()
   end
 
   def list_transactions(_args) do

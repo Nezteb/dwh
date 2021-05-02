@@ -56,57 +56,75 @@ defmodule Homework.TransactionsResolversTest do
   describe "transactions with min and/or max value" do
     test "min only" do
       conn = build_conn()
-      conn = get conn, "/api", query: """
-      {
-        transactions(min: 4) {
-          amount
-        }
-      }
-      """
 
-      assert json_response(conn, 200) == %{"data" =>
-        %{"transactions" => [
-          %{"amount" => 5},
-          %{"amount" => 10},
-          %{"amount" => 100}
-        ]}
-      }
+      conn =
+        get(conn, "/api",
+          query: """
+          {
+            transactions(min: 4) {
+              amount
+            }
+          }
+          """
+        )
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "transactions" => [
+                   %{"amount" => 5},
+                   %{"amount" => 10},
+                   %{"amount" => 100}
+                 ]
+               }
+             }
     end
 
     test "max only" do
       conn = build_conn()
-      conn = get conn, "/api", query: """
-      {
-        transactions(max: 60) {
-          amount
-        }
-      }
-      """
 
-      assert json_response(conn, 200) == %{"data" =>
-        %{"transactions" => [
-          %{"amount" => 1},
-          %{"amount" => 5},
-          %{"amount" => 10}
-        ]}
-      }
+      conn =
+        get(conn, "/api",
+          query: """
+          {
+            transactions(max: 60) {
+              amount
+            }
+          }
+          """
+        )
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "transactions" => [
+                   %{"amount" => 1},
+                   %{"amount" => 5},
+                   %{"amount" => 10}
+                 ]
+               }
+             }
     end
 
     test "min and max" do
       conn = build_conn()
-      conn = get conn, "/api", query: """
-      {
-        transactions(min: 6, max: 99) {
-          amount
-        }
-      }
-      """
 
-      assert json_response(conn, 200) == %{"data" =>
-        %{"transactions" => [
-          %{"amount" => 10}
-        ]}
-      }
+      conn =
+        get(conn, "/api",
+          query: """
+          {
+            transactions(min: 6, max: 99) {
+              amount
+            }
+          }
+          """
+        )
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "transactions" => [
+                   %{"amount" => 10}
+                 ]
+               }
+             }
     end
   end
 end

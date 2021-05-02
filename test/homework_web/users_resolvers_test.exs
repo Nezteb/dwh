@@ -8,6 +8,7 @@ defmodule Homework.UsersResolversTest do
       attrs
       |> Enum.into(@valid_user_attrs)
       |> Users.create_user()
+
     user
   end
 
@@ -21,58 +22,76 @@ defmodule Homework.UsersResolversTest do
   describe "search for users by first and/or last name" do
     test "last name only" do
       conn = build_conn()
-      conn = get conn, "/api", query: """
-      {
-        users(lastName: "mi") {
-          firstName
-          lastName
-        }
-      }
-      """
 
-      assert json_response(conn, 200) == %{"data" =>
-        %{"users" => [
-          %{"firstName" => "John", "lastName" => "Smith"},
-          %{"firstName" => "Robert", "lastName" => "Smith"}
-        ]}
-      }
+      conn =
+        get(conn, "/api",
+          query: """
+          {
+            users(lastName: "mi") {
+              firstName
+              lastName
+            }
+          }
+          """
+        )
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "users" => [
+                   %{"firstName" => "John", "lastName" => "Smith"},
+                   %{"firstName" => "Robert", "lastName" => "Smith"}
+                 ]
+               }
+             }
     end
 
     test "first name only" do
       conn = build_conn()
-      conn = get conn, "/api", query: """
-      {
-        users(firstName: "oh") {
-          firstName
-          lastName
-        }
-      }
-      """
 
-      assert json_response(conn, 200) == %{"data" =>
-        %{"users" => [
-          %{"firstName" => "John", "lastName" => "Smith"},
-          %{"firstName" => "John", "lastName" => "Adams"}
-        ]}
-      }
+      conn =
+        get(conn, "/api",
+          query: """
+          {
+            users(firstName: "oh") {
+              firstName
+              lastName
+            }
+          }
+          """
+        )
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "users" => [
+                   %{"firstName" => "John", "lastName" => "Smith"},
+                   %{"firstName" => "John", "lastName" => "Adams"}
+                 ]
+               }
+             }
     end
 
     test "first and last name" do
       conn = build_conn()
-      conn = get conn, "/api", query: """
-      {
-        users(firstName: "oh",lastName: "mi") {
-          firstName
-          lastName
-        }
-      }
-      """
 
-      assert json_response(conn, 200) == %{"data" =>
-        %{"users" => [
-          %{"firstName" => "John", "lastName" => "Smith"}
-        ]}
-      }
+      conn =
+        get(conn, "/api",
+          query: """
+          {
+            users(firstName: "oh",lastName: "mi") {
+              firstName
+              lastName
+            }
+          }
+          """
+        )
+
+      assert json_response(conn, 200) == %{
+               "data" => %{
+                 "users" => [
+                   %{"firstName" => "John", "lastName" => "Smith"}
+                 ]
+               }
+             }
     end
   end
 end

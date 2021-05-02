@@ -52,6 +52,10 @@ dozzle-stop:
 
 ### Local Development Commands (or for use in your container)
 
+.PHONY: format
+format:
+	mix format mix.exs "lib/**/*.{ex,exs}" "test/**/*.{ex,exs}"
+
 .PHONY: clean
 clean:
 	mix clean --deps

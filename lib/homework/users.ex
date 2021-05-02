@@ -22,7 +22,8 @@ defmodule Homework.Users do
 
     from(u in User,
       where: like(u.first_name, ^first_name_wildcard) and like(u.last_name, ^last_name_wildcard)
-    ) |> Repo.all
+    )
+    |> Repo.all()
   end
 
   def list_users(%{first_name: first_name}) do
@@ -30,7 +31,8 @@ defmodule Homework.Users do
 
     from(u in User,
       where: like(u.first_name, ^first_name_wildcard)
-    ) |> Repo.all
+    )
+    |> Repo.all()
   end
 
   def list_users(%{last_name: last_name}) do
@@ -38,7 +40,8 @@ defmodule Homework.Users do
 
     from(u in User,
       where: like(u.last_name, ^last_name_wildcard)
-    ) |> Repo.all
+    )
+    |> Repo.all()
   end
 
   def list_users(_args) do
