@@ -20,6 +20,14 @@ defmodule HomeworkWeb.Schema do
       resolve(&UsersResolver.users/3)
     end
 
+    @desc "Search for Users by first or last name"
+    field(:search_for_users, list_of(:user)) do
+      # TODO: Make first and last name search into a union type
+      arg :first_name, :string
+      arg :last_name, :string
+      resolve(&UsersResolver.search_for_users/3)
+    end
+
     @desc "Get all Merchants"
     field(:merchants, list_of(:merchant)) do
       resolve(&MerchantsResolver.merchants/3)

@@ -6,16 +6,25 @@
 docker: down
 	# You may want to rebuild the Docker container with "make build" before this
 	docker-compose up --detach --renew-anon-volumes
-	# Once the container is up, you can start a shell using `make dev` or `make test`
+	# Once the container is up, you can run the server with `make web` or tests with `make test`
+	# You can also start a shell using either `make shell-web` or `make shell-test`
 
 .PHONY: web
 web:
-	docker-compose exec web "bash"
-	# After you have a shell, you can use `iex -S mix phx.server`
+	docker-compose exec web mix phx.server
 
 .PHONY: test
 test:
-	docker-compose exec test "bash"
+	docker-compose exec test mix test
+
+.PHONY: shell-web
+shell-web:
+	docker-compose exec web bash
+	# After you have a shell, you can use `iex -S mix phx.server`
+
+.PHONY: shell-test
+shell-test:
+	docker-compose exec test bash
 	# After you have a shell, you can use `mix test`
 
 .PHONY: down
@@ -28,8 +37,8 @@ build:
 
 .PHONY: stop
 stop: down
-	docker stop $(docker ps -aq) || true
-	docker rm $(docker ps -aq) || true
+	docker stop `docker ps -aq` || true
+	docker rm `docker ps -aq` || true
 
 .PHONY: dozzle
 dozzle: dozzle-stop

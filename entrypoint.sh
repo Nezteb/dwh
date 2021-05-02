@@ -18,7 +18,12 @@ if [[ -z `psql -h $POSTGRES_HOST -p 5432 -U $POSTGRES_USER -Atqc "\\list $POSTGR
   echo "Database $POSTGRES_DATABASE does not exist. Creating..."
   mix ecto.create
   mix ecto.migrate
-  mix run priv/repo/seeds.exs
+
+  # Don't seed the test database
+  if [ "$MIX_ENV" != "test" ]; then
+    mix run priv/repo/seeds.exs
+  fi
+
   echo "Database $POSTGRES_DATABASE created."
 fi
 

@@ -38,6 +38,40 @@ defmodule Homework.Users do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets all users by their first and last names via fuzzy search.
+  """
+  def search_for_users(%{first_name: first_name, last_name: last_name}) do
+    first_name_wildcard = "%#{first_name}%"
+    last_name_wildcard = "%#{last_name}%"
+
+    from(u in User,
+      where: like(u.first_name, ^first_name_wildcard) and like(u.last_name, ^last_name_wildcard)
+    ) |> Repo.all
+  end
+
+  @doc """
+  Gets all users by their first name via fuzzy search.
+  """
+  def search_for_users(%{first_name: first_name}) do
+    first_name_wildcard = "%#{first_name}%"
+
+    from(u in User,
+      where: like(u.first_name, ^first_name_wildcard)
+    ) |> Repo.all
+  end
+
+  @doc """
+  Gets all users by their last name via fuzzy search.
+  """
+  def search_for_users(%{last_name: last_name}) do
+    last_name_wildcard = "%#{last_name}%"
+
+    from(u in User,
+      where: like(u.last_name, ^last_name_wildcard)
+    ) |> Repo.all
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples
