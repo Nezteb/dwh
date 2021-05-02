@@ -9,7 +9,7 @@ defmodule HomeworkWeb.Router do
     pipe_through(:api)
 
     forward("/api", Absinthe.Plug,
-      schema: PlateSlateWeb.Schema
+      schema: HomeworkWeb.Schema
     )
 
     forward("/graphiql", Absinthe.Plug.GraphiQL,
