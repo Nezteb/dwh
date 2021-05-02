@@ -7,6 +7,7 @@ defmodule Homework.Users.User do
     field(:dob, :string)
     field(:first_name, :string)
     field(:last_name, :string)
+    belongs_to(:company, Company, type: :binary_id, foreign_key: :company_id)
 
     timestamps()
   end

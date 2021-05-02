@@ -9,7 +9,12 @@ defmodule Homework.Users do
   alias Homework.Users.User
 
   @doc """
-  Gets all users by their first and last names via fuzzy search.
+  Gets all users by their first and/or last names via fuzzy search.
+  If no first or last name is given, all users are returned.
+
+  ## Examples
+      iex> list_users([])
+      [%User{}, ...]
   """
   def list_users(%{first_name: first_name, last_name: last_name}) do
     first_name_wildcard = "%#{first_name}%"
@@ -20,9 +25,6 @@ defmodule Homework.Users do
     ) |> Repo.all
   end
 
-  @doc """
-  Gets all users by their first name via fuzzy search.
-  """
   def list_users(%{first_name: first_name}) do
     first_name_wildcard = "%#{first_name}%"
 
@@ -31,9 +33,6 @@ defmodule Homework.Users do
     ) |> Repo.all
   end
 
-  @doc """
-  Gets all users by their last name via fuzzy search.
-  """
   def list_users(%{last_name: last_name}) do
     last_name_wildcard = "%#{last_name}%"
 
@@ -42,15 +41,6 @@ defmodule Homework.Users do
     ) |> Repo.all
   end
 
-  @doc """
-  Returns the list of users.
-
-  ## Examples
-
-      iex> list_users([])
-      [%User{}, ...]
-
-  """
   def list_users(_args) do
     Repo.all(User)
   end

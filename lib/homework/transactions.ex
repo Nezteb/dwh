@@ -9,7 +9,12 @@ defmodule Homework.Transactions do
   alias Homework.Transactions.Transaction
 
   @doc """
-  Returns the list of transactions.
+  Returns the list of transactions given a minimum and/or maximum value.
+  If no min or max is given, all transactions are returned.
+
+  ## Examples
+      iex> list_transactions([])
+      [%Transaction{}, ...]
   """
   def list_transactions(%{min: min, max: max}) do
     from(t in Transaction,
@@ -17,33 +22,18 @@ defmodule Homework.Transactions do
     ) |> Repo.all
   end
 
-  @doc """
-  Returns the list of transactions.
-  """
   def list_transactions(%{min: min}) do
     from(t in Transaction,
       where: t.amount >= ^min
     ) |> Repo.all
   end
 
-  @doc """
-  Returns the list of transactions.
-  """
   def list_transactions(%{max: max}) do
     from(t in Transaction,
       where: t.amount <= ^max
     ) |> Repo.all
   end
 
-  @doc """
-  Returns the list of transactions.
-
-  ## Examples
-
-      iex> list_transactions([])
-      [%Transaction{}, ...]
-
-  """
   def list_transactions(_args) do
     Repo.all(Transaction)
   end

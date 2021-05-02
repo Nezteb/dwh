@@ -1,4 +1,4 @@
-defmodule Homework.ResolversTest do
+defmodule Homework.TransactionsResolversTest do
   use HomeworkWeb.ConnCase, async: true
   alias Homework.Merchants
   alias Homework.Transactions

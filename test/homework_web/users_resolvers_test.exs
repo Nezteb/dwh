@@ -1,4 +1,4 @@
-defmodule Homework.ResolversTest do
+defmodule Homework.UsersResolversTest do
   use HomeworkWeb.ConnCase, async: true
   alias Homework.Users
 
