@@ -12,7 +12,9 @@ RUN mix local.hex --force
 RUN mix local.rebar --force
 
 # Compile the project (for both dev and test, for faster container startup)
+RUN MIX_ENV=test mix deps.get
 RUN MIX_ENV=test mix do compile
+RUN mix deps.get
 RUN mix do compile
 
 RUN chmod +x /app/entrypoint.sh

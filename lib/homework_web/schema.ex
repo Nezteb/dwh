@@ -32,7 +32,7 @@ defmodule HomeworkWeb.Schema do
     end
 
     @desc "Get all Companies"
-    field(:companies, list_of(:companies)) do
+    field(:companies, list_of(:company)) do
       resolve(&CompaniesResolver.companies/3)
     end
   end
