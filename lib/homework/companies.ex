@@ -7,6 +7,7 @@ defmodule Homework.Companies do
   alias Homework.Repo
 
   alias Homework.Companies.Company
+  alias Homework.Transactions.Transaction
 
   @doc """
   Returns the list of companies.
@@ -17,8 +18,13 @@ defmodule Homework.Companies do
       [%Company{}, ...]
 
   """
-  def list_companies do
-    Repo.all(Company)
+  def list_companies(_args) do
+    companies = Repo.all(Company)
+    Enum.map(companies, fn company ->
+      # TODO: Use Ecto.Multi to batch these updates
+      {:ok, updated_company} = calculate_and_update_available_credit_for_company(company)
+      updated_company
+    end)
   end
 
   @doc """
@@ -35,7 +41,35 @@ defmodule Homework.Companies do
       ** (Ecto.NoResultsError)
 
   """
-  def get_company!(id), do: Repo.get!(Company, id)
+  def get_company!(id) do
+    company = Repo.get!(Company, id)
+    # TODO: Not a huge fan of doing a write during a read, but
+    # TODO: doing an update for every transaction isn't ideal either.
+    # TODO: Possibly use a postgres trigger instead?
+    calculate_and_update_available_credit_for_company(company)
+  end
+
+  def calculate_and_update_available_credit_for_company(%Company{} = company) do
+    available_credit = company.credit_line - calculate_credit_transaction_total_for_company(company)
+
+    # Available credit can only be set directly because it is filtered out of the changeset by design
+    company
+    |> Company.changeset_available_credit(%{available_credit: available_credit})
+    |> Repo.update()
+  end
+
+  def calculate_credit_transaction_total_for_company(%Company{} = company) do
+    credit_transaction_total = from(t in Transaction,
+      where: t.company_id == ^company.id and t.credit == true,
+      select: sum(t.amount)
+    )
+    |> Repo.one!()
+
+    case credit_transaction_total do
+      nil -> 0
+      _ -> credit_transaction_total
+    end
+  end
 
   @doc """
   Creates a company.
@@ -71,14 +105,6 @@ defmodule Homework.Companies do
     company
     |> Company.changeset(attrs)
     |> Repo.update()
-  end
-
-  def get_available_credit_for_company(%Company{} = company) do
-    # TODO: Credit line minus total amount of transactions (debits - credits)
-  end
-
-  def get_transaction_total_for_company(%Company{} = company) do
-    # TODO: Ecto sum query here for all transactions
   end
 
   @doc """

@@ -8,6 +8,9 @@ defmodule Homework.Transactions do
 
   alias Homework.Transactions.Transaction
 
+  # TODO: Refactor this macro api
+  import HomeworkWeb.Pagination
+
   @doc """
   Returns the list of transactions given a minimum and/or maximum value.
   If no min or max is given, all transactions are returned.
@@ -16,29 +19,33 @@ defmodule Homework.Transactions do
       iex> list_transactions([])
       [%Transaction{}, ...]
   """
-  def list_transactions(%{min: min, max: max}) do
-    from(t in Transaction,
-      where: t.amount >= ^min and t.amount <= ^max
-    )
+  def list_transactions(%{min: min, max: max} = args) do
+    Transaction
+    |> where([t], t.amount >= ^min)
+    |> where([t], t.amount <= ^max)
+    |> paginated_query(args)
     |> Repo.all()
   end
 
-  def list_transactions(%{min: min}) do
-    from(t in Transaction,
-      where: t.amount >= ^min
-    )
+  def list_transactions(%{min: min} = args) do
+    Transaction
+    |> where([t], t.amount >= ^min)
+    |> paginated_query(args)
     |> Repo.all()
   end
 
-  def list_transactions(%{max: max}) do
-    from(t in Transaction,
-      where: t.amount <= ^max
-    )
+  def list_transactions(%{max: max} = args) do
+    Transaction
+    |> where([t], t.amount <= ^max)
+    |> paginated_query(args)
     |> Repo.all()
   end
 
-  def list_transactions(_args) do
-    Repo.all(Transaction)
+  def list_transactions(args) do
+    Transaction
+    |> select([t], t)
+    |> paginated_query(args)
+    |> Repo.all()
   end
 
   @doc """

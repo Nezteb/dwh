@@ -4,9 +4,12 @@ defmodule HomeworkWeb.Schemas.TransactionsSchema do
   """
   use Absinthe.Schema.Notation
 
+  # TODO: Refactor this macro api
+  import HomeworkWeb.Pagination
+
   alias HomeworkWeb.Resolvers.TransactionsResolver
 
-  object :transaction do
+  paginated_object :transaction, :transactions do
     field(:id, non_null(:id))
     field(:user_id, :id)
     field(:amount, :integer)

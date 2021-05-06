@@ -4,6 +4,9 @@ defmodule HomeworkWeb.Schema do
   """
   use Absinthe.Schema
 
+  # TODO: Refactor this macro API
+  use HomeworkWeb.Pagination
+
   alias HomeworkWeb.Resolvers.MerchantsResolver
   alias HomeworkWeb.Resolvers.TransactionsResolver
   alias HomeworkWeb.Resolvers.UsersResolver
@@ -12,7 +15,7 @@ defmodule HomeworkWeb.Schema do
 
   query do
     @desc "Get all Transactions"
-    field(:transactions, list_of(:transaction)) do
+    paginated_field(:transactions) do
       arg(:max, :integer)
       arg(:min, :integer)
       resolve(&TransactionsResolver.transactions/3)

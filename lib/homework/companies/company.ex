@@ -14,7 +14,13 @@ defmodule Homework.Companies.Company do
   @doc false
   def changeset(company, attrs) do
     company
-    |> cast(attrs, [:name, :credit_line, :available_credit])
-    |> validate_required([:name, :credit_line, :available_credit])
+    |> cast(attrs, [:name, :credit_line])
+    |> validate_required([:name, :credit_line])
+  end
+
+  def changeset_available_credit(company, attrs) do
+    company
+    |> cast(attrs, [:available_credit])
+    |> validate_required([:available_credit])
   end
 end

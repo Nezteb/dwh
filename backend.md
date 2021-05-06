@@ -21,27 +21,27 @@ For **junior engineers** complete any 1 of these objectives and include a basic 
 
 ## Objectives
 
- * [ ] Write filtering options for transactions, users, and/or merchants. This could include:
-   * [ ] fuzzy searching for a user by first and last name
-   * [ ] fuzzy searching for a merchant by name
-   * [ ] getting back transactions with an amount between `min` and `max` arguments
+ * [x] Write filtering options for transactions, users, and/or merchants. This could include:
+   * [x] fuzzy searching for a user by first and last name
+   * [x] fuzzy searching for a merchant by name
+   * [x] getting back transactions with an amount between `min` and `max` arguments
 
- * [ ] Write a new schema, queries, and mutations to add companies to the app
-   * [ ] users should belong to a company and we should require transactions to pass in a company_id
-   * [ ] company should have a `name`, `credit_line`, and `available_credit` which would be the `credit_line` minus the total amount of `transactions` for the company
+ * [x] Write a new schema, queries, and mutations to add companies to the app
+   * [x] users should belong to a company and we should require transactions to pass in a company_id
+   * [x] company should have a `name`, `credit_line`, and `available_credit` which would be the `credit_line` minus the total amount of `transactions` for the company
 
  * [x] Seed the database.  Possible solutions include:
    * [x] Implement provided `seeds.ex` file
    * [ ] Write a `.sql` file that can be ingested by the database
 
- * [ ] Write tests for the resolvers & mutations.
-   * [ ] Testing that you can get information from the resolver queries
+ * [x] Write tests for the resolvers & mutations.
+   * [x] Testing that you can get information from the resolver queries
    * [ ] Testing that you can get create/update/delete from the resolver mutations
 
- * [ ] Add a pagination layer to the queries
-   * [ ] should include a `limit` (how many rows to return) and `skip` (how many rows to skip) options
-   * [ ] should return a `total_rows` (how many total rows exist)
-   * [ ] Bonus: Make it a wrapper that all the schemas can tap into.
+ * [x] Add a pagination layer to the queries
+   * [x] should include a `limit` (how many rows to return) and `skip` (how many rows to skip) options
+   * [x] should return a `total_rows` (how many total rows exist)
+   * [x] Bonus: Make it a wrapper that all the schemas can tap into.
 
  * [ ] Allow the mutations to handle a decimal amount for transactions (the database stores it as cents)
    * [ ] Mutations need to convert the Decimal amount to an Integer e.g. 24.68 becomes 2468
@@ -49,5 +49,5 @@ For **junior engineers** complete any 1 of these objectives and include a basic 
 
 ## Bonus points
  * [x] Find the bug with transactions
- * [ ] Find the security issue
+ * [x] Find the security issue
  * [ ] Add/improve the docs and @spec to functions
