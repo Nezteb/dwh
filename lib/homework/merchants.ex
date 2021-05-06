@@ -4,6 +4,7 @@ defmodule Homework.Merchants do
   """
 
   import Ecto.Query, warn: false
+  import HomeworkWeb.Pagination
   alias Homework.Repo
 
   alias Homework.Merchants.Merchant
@@ -17,8 +18,10 @@ defmodule Homework.Merchants do
       [%Merchant{}, ...]
 
   """
-  def list_merchants(_args) do
-    Repo.all(Merchant)
+  def list_merchants(args) do
+    Merchant
+    |> paginated_query(args)
+    |> Repo.all()
   end
 
   @doc """

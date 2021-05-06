@@ -3,10 +3,11 @@ defmodule HomeworkWeb.Schemas.MerchantsSchema do
   Defines the graphql schema for merchants.
   """
   use Absinthe.Schema.Notation
+  import HomeworkWeb.Pagination
 
   alias HomeworkWeb.Resolvers.MerchantsResolver
 
-  object :merchant do
+  paginated_object :merchant, :merchants do
     field(:id, non_null(:id))
     field(:name, :string)
     field(:description, :string)

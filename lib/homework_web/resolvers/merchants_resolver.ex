@@ -1,11 +1,13 @@
 defmodule HomeworkWeb.Resolvers.MerchantsResolver do
   alias Homework.Merchants
+  alias Homework.Merchants.Merchant
+  import HomeworkWeb.Pagination
 
   @doc """
   Get a list of merchants
   """
   def merchants(_root, args, _info) do
-    {:ok, Merchants.list_merchants(args)}
+    paginated_resolver_results(Merchant, Merchants.list_merchants(args), args)
   end
 
   @doc """

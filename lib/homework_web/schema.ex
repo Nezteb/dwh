@@ -29,7 +29,7 @@ defmodule HomeworkWeb.Schema do
     end
 
     @desc "Get all Merchants"
-    field(:merchants, list_of(:merchant)) do
+    paginated_field(:merchants) do
       resolve(&MerchantsResolver.merchants/3)
     end
 
