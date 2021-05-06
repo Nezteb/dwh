@@ -1,25 +1,15 @@
 defmodule HomeworkWeb.Resolvers.UsersResolver do
   alias Homework.Users
 
-  @doc """
-  Find users by their first name
-  """
-  def users(_root, %{first_name: _first_name} = args, _info) do
-    {:ok, Users.list_users(args)}
-  end
-
-  @doc """
-  Find users by their last name
-  """
-  def users(_root, %{last_name: _last_name} = args, _info) do
-    {:ok, Users.list_users(args)}
-  end
+  import HomeworkWeb.Pagination
+  alias Homework.Users
+  alias Homework.Users.User
 
   @doc """
   Get a list of users
   """
   def users(_root, args, _info) do
-    {:ok, Users.list_users(args)}
+    paginated_resolver_results(User, Users.list_users(args), args)
   end
 
   @doc """

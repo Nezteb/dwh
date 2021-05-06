@@ -4,7 +4,6 @@ defmodule HomeworkWeb.Schemas.TransactionsSchema do
   """
   use Absinthe.Schema.Notation
 
-  # TODO: Refactor this macro api
   import HomeworkWeb.Pagination
 
   alias HomeworkWeb.Resolvers.TransactionsResolver

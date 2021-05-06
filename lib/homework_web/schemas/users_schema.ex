@@ -4,9 +4,11 @@ defmodule HomeworkWeb.Schemas.UsersSchema do
   """
   use Absinthe.Schema.Notation
 
+  import HomeworkWeb.Pagination
+
   alias HomeworkWeb.Resolvers.UsersResolver
 
-  object :user do
+  paginated_object :user, :users do
     field(:id, non_null(:id))
     field(:dob, :string)
     field(:first_name, :string)

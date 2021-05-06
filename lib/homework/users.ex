@@ -4,8 +4,8 @@ defmodule Homework.Users do
   """
 
   import Ecto.Query, warn: false
+  import HomeworkWeb.Pagination
   alias Homework.Repo
-
   alias Homework.Users.User
 
   @doc """
@@ -16,36 +16,39 @@ defmodule Homework.Users do
       iex> list_users([])
       [%User{}, ...]
   """
-  def list_users(%{first_name: first_name, last_name: last_name}) do
+  def list_users(%{first_name: first_name, last_name: last_name} = args) do
     first_name_wildcard = "%#{first_name}%"
     last_name_wildcard = "%#{last_name}%"
 
-    from(u in User,
-      where: like(u.first_name, ^first_name_wildcard) and like(u.last_name, ^last_name_wildcard)
-    )
+    User
+    |> where([u], like(u.first_name, ^first_name_wildcard))
+    |> where([u], like(u.last_name, ^last_name_wildcard))
+    |> paginated_query(args)
     |> Repo.all()
   end
 
-  def list_users(%{first_name: first_name}) do
+  def list_users(%{first_name: first_name} = args) do
     first_name_wildcard = "%#{first_name}%"
 
-    from(u in User,
-      where: like(u.first_name, ^first_name_wildcard)
-    )
+    User
+    |> where([u], like(u.first_name, ^first_name_wildcard))
+    |> paginated_query(args)
     |> Repo.all()
   end
 
-  def list_users(%{last_name: last_name}) do
+  def list_users(%{last_name: last_name} = args) do
     last_name_wildcard = "%#{last_name}%"
 
-    from(u in User,
-      where: like(u.last_name, ^last_name_wildcard)
-    )
+    User
+    |> where([u], like(u.last_name, ^last_name_wildcard))
+    |> paginated_query(args)
     |> Repo.all()
   end
 
-  def list_users(_args) do
-    Repo.all(User)
+  def list_users(args) do
+    User
+    |> paginated_query(args)
+    |> Repo.all()
   end
 
   @doc """

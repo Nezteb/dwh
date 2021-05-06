@@ -2,7 +2,7 @@ defmodule HomeworkWeb.Pagination do
   import Ecto.Query
   alias Homework.Repo
 
-  # TODO: Spli this macro module into separate modules for easier use
+  # TODO: Split this macro module into separate modules for easier use
 
   defmacro paginated_field(plural_atom, do: block) do
     plural_string = Atom.to_string(plural_atom)

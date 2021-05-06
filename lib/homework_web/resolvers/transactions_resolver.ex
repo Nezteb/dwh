@@ -4,22 +4,7 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
   alias Homework.Transactions.Transaction
   alias Homework.Users
 
-  # TODO: Refactor this macro API
   import HomeworkWeb.Pagination
-
-  @doc """
-  Get a list of transcations above a minimum amount
-  """
-  def transactions(_root, %{min: min} = args, _info) do
-    paginated_resolver_results(Transaction, Transactions.list_transactions(args), args)
-  end
-
-  @doc """
-  Get a list of transcations below a maximum amount
-  """
-  def transactions(_root, %{max: max} = args, _info) do
-    paginated_resolver_results(Transaction, Transactions.list_transactions(args), args)
-  end
 
   @doc """
   Get a list of transcations

@@ -4,7 +4,6 @@ defmodule HomeworkWeb.Schema do
   """
   use Absinthe.Schema
 
-  # TODO: Refactor this macro API
   use HomeworkWeb.Pagination
 
   alias HomeworkWeb.Resolvers.MerchantsResolver
@@ -22,7 +21,7 @@ defmodule HomeworkWeb.Schema do
     end
 
     @desc "Get all Users"
-    field(:users, list_of(:user)) do
+    paginated_field(:users) do
       # TODO: Make first and last name search into an optional union type?
       arg(:first_name, :string)
       arg(:last_name, :string)

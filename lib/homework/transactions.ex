@@ -4,12 +4,9 @@ defmodule Homework.Transactions do
   """
 
   import Ecto.Query, warn: false
-  alias Homework.Repo
-
-  alias Homework.Transactions.Transaction
-
-  # TODO: Refactor this macro api
   import HomeworkWeb.Pagination
+  alias Homework.Repo
+  alias Homework.Transactions.Transaction
 
   @doc """
   Returns the list of transactions given a minimum and/or maximum value.
@@ -43,7 +40,6 @@ defmodule Homework.Transactions do
 
   def list_transactions(args) do
     Transaction
-    |> select([t], t)
     |> paginated_query(args)
     |> Repo.all()
   end
