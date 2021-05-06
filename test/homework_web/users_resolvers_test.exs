@@ -1,8 +1,20 @@
 defmodule Homework.UsersResolversTest do
   use HomeworkWeb.ConnCase, async: true
   alias Homework.Users
+  alias Homework.Companies
 
-  @valid_user_attrs %{dob: "some dob", first_name: "some first_name", last_name: "some last_name"}
+  def company_fixture(attrs \\ %{}) do
+    valid_attrs = %{available_credit: 42, credit_line: 42, name: "some name"}
+
+    {:ok, company} =
+      attrs
+      |> Enum.into(valid_attrs)
+      |> Companies.create_company()
+
+    company
+  end
+
+  @valid_user_attrs %{dob: "some dob", first_name: "some first_name", last_name: "some last_name", company_id: Ecto.UUID.bingenerate()}
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
@@ -13,9 +25,10 @@ defmodule Homework.UsersResolversTest do
   end
 
   setup do
-    user_fixture(%{first_name: "John", last_name: "Smith"})
-    user_fixture(%{first_name: "John", last_name: "Adams"})
-    user_fixture(%{first_name: "Robert", last_name: "Smith"})
+    company = company_fixture()
+    user_fixture(%{first_name: "John", last_name: "Smith", company_id: company.id})
+    user_fixture(%{first_name: "John", last_name: "Adams", company_id: company.id})
+    user_fixture(%{first_name: "Robert", last_name: "Smith", company_id: company.id})
     :ok
   end
 
@@ -28,8 +41,10 @@ defmodule Homework.UsersResolversTest do
           query: """
           {
             users(lastName: "mi") {
-              firstName
-              lastName
+              results {
+                firstName
+                lastName
+              }
             }
           }
           """
@@ -37,10 +52,12 @@ defmodule Homework.UsersResolversTest do
 
       assert json_response(conn, 200) == %{
                "data" => %{
-                 "users" => [
-                   %{"firstName" => "John", "lastName" => "Smith"},
-                   %{"firstName" => "Robert", "lastName" => "Smith"}
-                 ]
+                 "users" => %{
+                   "results" => [
+                    %{"firstName" => "John", "lastName" => "Smith"},
+                    %{"firstName" => "Robert", "lastName" => "Smith"}
+                  ]
+                 }
                }
              }
     end
@@ -53,21 +70,25 @@ defmodule Homework.UsersResolversTest do
           query: """
           {
             users(firstName: "oh") {
-              firstName
-              lastName
+              results {
+                firstName
+                lastName
+              }
             }
           }
           """
         )
 
       assert json_response(conn, 200) == %{
-               "data" => %{
-                 "users" => [
-                   %{"firstName" => "John", "lastName" => "Smith"},
-                   %{"firstName" => "John", "lastName" => "Adams"}
-                 ]
-               }
-             }
+              "data" => %{
+                "users" => %{
+                "results" => [
+                  %{"firstName" => "John", "lastName" => "Smith"},
+                  %{"firstName" => "John", "lastName" => "Adams"}
+                ]
+                }
+              }
+            }
     end
 
     test "first and last name" do
@@ -78,8 +99,10 @@ defmodule Homework.UsersResolversTest do
           query: """
           {
             users(firstName: "oh",lastName: "mi") {
-              firstName
-              lastName
+              results {
+                firstName
+                lastName
+              }
             }
           }
           """
@@ -87,9 +110,11 @@ defmodule Homework.UsersResolversTest do
 
       assert json_response(conn, 200) == %{
                "data" => %{
-                 "users" => [
-                   %{"firstName" => "John", "lastName" => "Smith"}
-                 ]
+                 "users" => %{
+                   "results" => [
+                    %{"firstName" => "John", "lastName" => "Smith"}
+                  ]
+                 }
                }
              }
     end

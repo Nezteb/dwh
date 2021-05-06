@@ -49,7 +49,8 @@ defmodule Homework.Companies do
     # TODO: Not a huge fan of doing a write during a read, but
     # TODO: doing an update for every transaction isn't ideal either.
     # TODO: Possibly use a postgres trigger instead?
-    calculate_and_update_available_credit_for_company(company)
+    {:ok, company} = calculate_and_update_available_credit_for_company(company)
+    company
   end
 
   def calculate_and_update_available_credit_for_company(%Company{} = company) do
@@ -87,8 +88,12 @@ defmodule Homework.Companies do
 
   """
   def create_company(attrs \\ %{}) do
+    # When creating a company for the first time, set the available credit to the credit line
+    credit_line = Map.get(attrs, :credit_line, 0)
+    attrs = Map.put(attrs, :available_credit, credit_line)
+
     %Company{}
-    |> Company.changeset(attrs)
+    |> Company.changeset_available_credit(attrs)
     |> Repo.insert()
   end
 
@@ -105,9 +110,15 @@ defmodule Homework.Companies do
 
   """
   def update_company(%Company{} = company, attrs) do
-    company
+    result = company
     |> Company.changeset(attrs)
     |> Repo.update()
+
+    case result do
+      {:ok, company} -> calculate_and_update_available_credit_for_company(company)
+      {:error, _} -> result
+    end
+
   end
 
   @doc """

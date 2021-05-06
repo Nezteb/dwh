@@ -3,6 +3,18 @@ defmodule Homework.TransactionsResolversTest do
   alias Homework.Merchants
   alias Homework.Transactions
   alias Homework.Users
+  alias Homework.Companies
+
+  def company_fixture(attrs \\ %{}) do
+    valid_attrs = %{available_credit: 42, credit_line: 42, name: "some name"}
+
+    {:ok, company} =
+      attrs
+      |> Enum.into(valid_attrs)
+      |> Companies.create_company()
+
+    company
+  end
 
   def transaction_fixture(valid_attrs, attrs \\ %{}) do
     {:ok, transaction} =
@@ -14,6 +26,8 @@ defmodule Homework.TransactionsResolversTest do
   end
 
   setup do
+    company = company_fixture()
+
     {:ok, merchant1} =
       Merchants.create_merchant(%{description: "some description", name: "some name"})
 
@@ -27,14 +41,16 @@ defmodule Homework.TransactionsResolversTest do
       Users.create_user(%{
         dob: "some dob",
         first_name: "some first_name",
-        last_name: "some last_name"
+        last_name: "some last_name",
+        company_id: company.id
       })
 
     {:ok, user2} =
       Users.create_user(%{
         dob: "some updated dob",
         first_name: "some updated first_name",
-        last_name: "some updated last_name"
+        last_name: "some updated last_name",
+        company_id: company.id
       })
 
     valid_attrs = %{
@@ -43,7 +59,8 @@ defmodule Homework.TransactionsResolversTest do
       debit: true,
       description: "some description",
       merchant_id: merchant1.id,
-      user_id: user1.id
+      user_id: user1.id,
+      company_id: company.id
     }
 
     transaction_fixture(valid_attrs, %{amount: 1})
@@ -62,7 +79,9 @@ defmodule Homework.TransactionsResolversTest do
           query: """
           {
             transactions(min: 4) {
-              amount
+              results {
+                amount
+              }
             }
           }
           """
@@ -70,11 +89,13 @@ defmodule Homework.TransactionsResolversTest do
 
       assert json_response(conn, 200) == %{
                "data" => %{
-                 "transactions" => [
-                   %{"amount" => 5},
-                   %{"amount" => 10},
-                   %{"amount" => 100}
-                 ]
+                 "transactions" => %{
+                   "results" => [
+                    %{"amount" => 5},
+                    %{"amount" => 10},
+                    %{"amount" => 100}
+                  ]
+                 }
                }
              }
     end
@@ -87,7 +108,9 @@ defmodule Homework.TransactionsResolversTest do
           query: """
           {
             transactions(max: 60) {
-              amount
+              results {
+                amount
+              }
             }
           }
           """
@@ -95,11 +118,13 @@ defmodule Homework.TransactionsResolversTest do
 
       assert json_response(conn, 200) == %{
                "data" => %{
-                 "transactions" => [
-                   %{"amount" => 1},
-                   %{"amount" => 5},
-                   %{"amount" => 10}
-                 ]
+                 "transactions" => %{
+                   "results" => [
+                     %{"amount" => 1},
+                     %{"amount" => 5},
+                     %{"amount" => 10}
+                   ]
+                 }
                }
              }
     end
@@ -112,7 +137,9 @@ defmodule Homework.TransactionsResolversTest do
           query: """
           {
             transactions(min: 6, max: 99) {
-              amount
+              results {
+                amount
+              }
             }
           }
           """
@@ -120,9 +147,10 @@ defmodule Homework.TransactionsResolversTest do
 
       assert json_response(conn, 200) == %{
                "data" => %{
-                 "transactions" => [
-                   %{"amount" => 10}
-                 ]
+                 "transactions" => %{
+                   "results" => [
+                     %{"amount" => 10}
+                    ]}
                }
              }
     end

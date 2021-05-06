@@ -21,7 +21,7 @@ defmodule Homework.CompaniesTest do
 
     test "list_companies/0 returns all companies" do
       company = company_fixture()
-      assert Companies.list_companies() == [company]
+      assert Companies.list_companies([]) == [company]
     end
 
     test "get_company!/1 returns the company with given id" do
