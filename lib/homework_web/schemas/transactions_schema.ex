@@ -33,6 +33,7 @@ defmodule HomeworkWeb.Schemas.TransactionsSchema do
     field :create_transaction, :transaction do
       arg(:user_id, non_null(:id))
       arg(:merchant_id, non_null(:id))
+      arg(:company_id, non_null(:id))
       @desc "amount is in cents"
       arg(:amount, non_null(:integer))
       arg(:credit, non_null(:boolean))
@@ -47,6 +48,7 @@ defmodule HomeworkWeb.Schemas.TransactionsSchema do
       arg(:id, non_null(:id))
       arg(:user_id, non_null(:id))
       arg(:merchant_id, non_null(:id))
+      arg(:company_id, non_null(:id))
       @desc "amount is in cents"
       arg(:amount, non_null(:integer))
       arg(:credit, non_null(:boolean))

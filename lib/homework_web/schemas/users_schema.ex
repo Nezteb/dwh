@@ -23,6 +23,7 @@ defmodule HomeworkWeb.Schemas.UsersSchema do
       arg(:dob, non_null(:string))
       arg(:first_name, non_null(:string))
       arg(:last_name, non_null(:string))
+      arg(:company_id, non_null(:id))
 
       resolve(&UsersResolver.create_user/3)
     end
@@ -33,6 +34,7 @@ defmodule HomeworkWeb.Schemas.UsersSchema do
       arg(:dob, non_null(:string))
       arg(:first_name, non_null(:string))
       arg(:last_name, non_null(:string))
+      arg(:company_id, non_null(:id))
 
       resolve(&UsersResolver.update_user/3)
     end

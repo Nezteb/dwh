@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y postgresql-client
 RUN mkdir /app
 COPY . /app
 WORKDIR /app
+RUN chmod +x /app/entrypoint.sh
 
 # Install hex package manager
 RUN mix local.hex --force
@@ -17,5 +18,4 @@ RUN MIX_ENV=test mix do compile
 RUN mix deps.get
 RUN mix do compile
 
-RUN chmod +x /app/entrypoint.sh
 ENTRYPOINT ["/app/entrypoint.sh"]

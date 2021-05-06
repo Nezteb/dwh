@@ -4,6 +4,8 @@ elixir -v
 export PGPASSWORD=$POSTGRES_PASSWORD # For non-interactive psql commands
 env | sort
 
+mix deps.get
+
 # Wait until Postgres is ready
 while ! pg_isready -q -h $POSTGRES_HOST -p 5432 -U $POSTGRES_USER
 do

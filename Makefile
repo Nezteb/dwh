@@ -19,13 +19,13 @@ test:
 
 .PHONY: shell-web
 shell-web:
-	docker-compose exec web bash
 	# After you have a shell, you can use `iex -S mix phx.server`
+	docker-compose exec web bash
 
 .PHONY: shell-test
 shell-test:
-	docker-compose exec test bash
 	# After you have a shell, you can use `mix test`
+	docker-compose exec test bash
 
 .PHONY: down
 down:
@@ -42,8 +42,8 @@ stop: down
 
 .PHONY: dozzle
 dozzle: dozzle-stop
+	# Open http://localhost:9999 to access Dozzle
 	docker run --name dozzle -d --volume=/var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest || true
-	open http://localhost:9999
 
 .PHONY: dozzle-stop
 dozzle-stop:
