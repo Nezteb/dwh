@@ -34,7 +34,7 @@ defmodule HomeworkWeb.Schema do
     end
 
     @desc "Get all Companies"
-    field(:companies, list_of(:company)) do
+    paginated_field(:companies) do
       resolve(&CompaniesResolver.companies/3)
     end
   end

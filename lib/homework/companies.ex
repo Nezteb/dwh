@@ -5,6 +5,7 @@ defmodule Homework.Companies do
 
   import Ecto.Query, warn: false
   alias Homework.Repo
+  import HomeworkWeb.Pagination
 
   alias Homework.Companies.Company
   alias Homework.Transactions.Transaction
@@ -18,9 +19,11 @@ defmodule Homework.Companies do
       [%Company{}, ...]
 
   """
-  def list_companies(_args) do
-    companies = Repo.all(Company)
-    Enum.map(companies, fn company ->
+  def list_companies(args) do
+    Company
+    |> paginated_query(args)
+    |> Repo.all()
+    |> Enum.map(fn company ->
       # TODO: Use Ecto.Multi to batch these updates
       {:ok, updated_company} = calculate_and_update_available_credit_for_company(company)
       updated_company

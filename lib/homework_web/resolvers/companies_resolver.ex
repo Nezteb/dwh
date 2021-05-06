@@ -1,11 +1,13 @@
 defmodule HomeworkWeb.Resolvers.CompaniesResolver do
   alias Homework.Companies
+  alias Homework.Companies.Company
+  import HomeworkWeb.Pagination
 
   @doc """
   Get a list of companies
   """
   def companies(_root, args, _info) do
-    {:ok, Companies.list_companies(args)}
+    paginated_resolver_results(Company, Companies.list_companies(args), args)
   end
 
   @doc """

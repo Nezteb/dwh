@@ -3,10 +3,11 @@ defmodule HomeworkWeb.Schemas.CompaniesSchema do
   Defines the graphql schema for companies.
   """
   use Absinthe.Schema.Notation
+  import HomeworkWeb.Pagination
 
   alias HomeworkWeb.Resolvers.CompaniesResolver
 
-  object :company do
+  paginated_object :company, :companies do
     field(:id, non_null(:id))
     field(:name, :string)
     field(:description, :string)
