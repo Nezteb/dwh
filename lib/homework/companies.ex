@@ -54,7 +54,8 @@ defmodule Homework.Companies do
   end
 
   def calculate_and_update_available_credit_for_company(%Company{} = company) do
-    available_credit = company.credit_line - calculate_credit_transaction_total_for_company(company)
+    available_credit =
+      company.credit_line - calculate_credit_transaction_total_for_company(company)
 
     # Available credit can only be set directly because it is filtered out of the changeset by design
     company
@@ -63,11 +64,12 @@ defmodule Homework.Companies do
   end
 
   def calculate_credit_transaction_total_for_company(%Company{} = company) do
-    credit_transaction_total = from(t in Transaction,
-      where: t.company_id == ^company.id and t.credit == true,
-      select: sum(t.amount)
-    )
-    |> Repo.one!()
+    credit_transaction_total =
+      from(t in Transaction,
+        where: t.company_id == ^company.id and t.credit == true,
+        select: sum(t.amount)
+      )
+      |> Repo.one!()
 
     case credit_transaction_total do
       nil -> 0
@@ -110,15 +112,15 @@ defmodule Homework.Companies do
 
   """
   def update_company(%Company{} = company, attrs) do
-    result = company
-    |> Company.changeset(attrs)
-    |> Repo.update()
+    result =
+      company
+      |> Company.changeset(attrs)
+      |> Repo.update()
 
     case result do
       {:ok, company} -> calculate_and_update_available_credit_for_company(company)
       {:error, _} -> result
     end
-
   end
 
   @doc """

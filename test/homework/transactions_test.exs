@@ -19,8 +19,8 @@ defmodule Homework.TransactionsTest do
           name: "some updated name"
         })
 
-
-      {:ok, company} = Companies.create_company(%{available_credit: 42, credit_line: 42, name: "some name"})
+      {:ok, company} =
+        Companies.create_company(%{available_credit: 42, credit_line: 42, name: "some name"})
 
       {:ok, user1} =
         Users.create_user(%{

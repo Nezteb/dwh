@@ -49,7 +49,10 @@ defmodule Homework.UsersTest do
 
     test "create_user/1 with valid data creates a user" do
       company = company_fixture()
-      assert {:ok, %User{} = user} = Users.create_user(%{company_id: company.id} |> Enum.into(@valid_attrs))
+
+      assert {:ok, %User{} = user} =
+               Users.create_user(%{company_id: company.id} |> Enum.into(@valid_attrs))
+
       assert user.dob == "some dob"
       assert user.first_name == "some first_name"
       assert user.last_name == "some last_name"
@@ -62,7 +65,10 @@ defmodule Homework.UsersTest do
     test "update_user/2 with valid data updates the user" do
       company = company_fixture()
       user = user_fixture(%{company_id: company.id})
-      assert {:ok, %User{} = user} = Users.update_user(user, %{company_id: company.id} |> Enum.into(@update_attrs))
+
+      assert {:ok, %User{} = user} =
+               Users.update_user(user, %{company_id: company.id} |> Enum.into(@update_attrs))
+
       assert user.dob == "some updated dob"
       assert user.first_name == "some updated first_name"
       assert user.last_name == "some updated last_name"

@@ -91,10 +91,10 @@ defmodule Homework.TransactionsResolversTest do
                "data" => %{
                  "transactions" => %{
                    "results" => [
-                    %{"amount" => 5},
-                    %{"amount" => 10},
-                    %{"amount" => 100}
-                  ]
+                     %{"amount" => 5},
+                     %{"amount" => 10},
+                     %{"amount" => 100}
+                   ]
                  }
                }
              }
@@ -150,7 +150,8 @@ defmodule Homework.TransactionsResolversTest do
                  "transactions" => %{
                    "results" => [
                      %{"amount" => 10}
-                    ]}
+                   ]
+                 }
                }
              }
     end

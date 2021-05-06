@@ -14,7 +14,12 @@ defmodule Homework.UsersResolversTest do
     company
   end
 
-  @valid_user_attrs %{dob: "some dob", first_name: "some first_name", last_name: "some last_name", company_id: Ecto.UUID.bingenerate()}
+  @valid_user_attrs %{
+    dob: "some dob",
+    first_name: "some first_name",
+    last_name: "some last_name",
+    company_id: Ecto.UUID.bingenerate()
+  }
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
@@ -54,9 +59,9 @@ defmodule Homework.UsersResolversTest do
                "data" => %{
                  "users" => %{
                    "results" => [
-                    %{"firstName" => "John", "lastName" => "Smith"},
-                    %{"firstName" => "Robert", "lastName" => "Smith"}
-                  ]
+                     %{"firstName" => "John", "lastName" => "Smith"},
+                     %{"firstName" => "Robert", "lastName" => "Smith"}
+                   ]
                  }
                }
              }
@@ -80,15 +85,15 @@ defmodule Homework.UsersResolversTest do
         )
 
       assert json_response(conn, 200) == %{
-              "data" => %{
-                "users" => %{
-                "results" => [
-                  %{"firstName" => "John", "lastName" => "Smith"},
-                  %{"firstName" => "John", "lastName" => "Adams"}
-                ]
-                }
-              }
-            }
+               "data" => %{
+                 "users" => %{
+                   "results" => [
+                     %{"firstName" => "John", "lastName" => "Smith"},
+                     %{"firstName" => "John", "lastName" => "Adams"}
+                   ]
+                 }
+               }
+             }
     end
 
     test "first and last name" do
@@ -112,8 +117,8 @@ defmodule Homework.UsersResolversTest do
                "data" => %{
                  "users" => %{
                    "results" => [
-                    %{"firstName" => "John", "lastName" => "Smith"}
-                  ]
+                     %{"firstName" => "John", "lastName" => "Smith"}
+                   ]
                  }
                }
              }
