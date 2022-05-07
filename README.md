@@ -12,8 +12,8 @@ To start your Phoenix server:
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
-You can use [`localhost:4000/graphiql`](http://localhost:4000/graphiql) to make basic graphql queries from your browser.
+Now you can visit [`localhost:8080`](http://localhost:8080) from your browser.
+You can use [`localhost:8080/graphiql`](http://localhost:8080/graphiql) to make basic graphql queries from your browser.
 
 
 ## Docker

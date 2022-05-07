@@ -3,19 +3,25 @@ FROM elixir:1.11.4
 RUN apt-get update && apt-get install -y postgresql-client
 
 # Create app directory and copy the Elixir projects into it
-RUN mkdir /app
-COPY . /app
+RUN mkdir /appf
 WORKDIR /app
-RUN chmod +x /app/entrypoint.sh
 
 # Install hex package manager
 RUN mix local.hex --force
 RUN mix local.rebar --force
 
-# Compile the project (for both dev and test, for faster container startup)
-RUN MIX_ENV=test mix deps.get
-RUN MIX_ENV=test mix do compile
-RUN mix deps.get
-RUN mix do compile
+COPY ./mix.exs /app/mix.exs
+COPY ./mix.lock /app/mix.lock
+COPY ./priv /app/priv
+COPY ./test /app/test
+COPY ./config /app/config
+COPY ./lib /app/lib
+
+# Compile the project
+RUN mix do deps.get, compile, release
+
+# Entrypoint script
+COPY ./entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]

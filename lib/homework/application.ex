@@ -3,9 +3,13 @@ defmodule Homework.Application do
   # for more information on OTP Applications
   @moduledoc false
 
+  require Logger
   use Application
 
   def start(_type, _args) do
+    # Print the env for troubleshooting purposes
+    Logger.info(Application.get_all_env(:homework))
+    
     children = [
       # Start the Ecto repository
       Homework.Repo,

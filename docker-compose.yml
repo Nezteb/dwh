@@ -6,50 +6,40 @@ services:
     image: web:latest
     container_name: web
     ports:
-      - "4000:4000"
+      - "8080:8080"
     environment:
       - MIX_ENV=dev
-      - PORT=4000
+      - POSTGRES_HOST=db
+      - POSTGRES_DATABASE=homework_test
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DATABASE=homework_dev
-      - POSTGRES_HOST=db
     volumes:
-      - .:/app
+      - ./entrypoint.sh:/app/entrypoint.sh
+      - ./Makefile:/app/Makefile
+      - ./mix.exs:/app/mix.exs
+      - ./mix.lock:/app/mix.lock
+      - ./config:/app/config
+      - ./lib:/app/lib
+      - ./priv:/app/priv
+      - ./test:/app/test
     links:
       - db
-    depends_on: 
+    depends_on:
       - db
 
   db:
-      # We use the predefined Postgres image
-      image: postgres:10.4
-      container_name: db
-      ports:
-        - "5432:5432"
-      environment:
-        # Set user/password for Postgres
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_DATABASE: homework_dev
-        # Set a path where Postgres should store the data
-        PGDATA: /var/lib/postgresql/data/pgdata
-      restart: always
-      volumes:
-        - .:/app/
-
-  test:
-    image: web:latest
-    container_name: test
+    # We use the predefined Postgres image
+    image: postgres:10.4
+    container_name: db
+    ports:
+      - "5432:5432"
     environment:
-      - MIX_ENV=test
+      # Set user/password for Postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DATABASE=homework_test
-      - POSTGRES_HOST=db
+      - POSTGRES_DATABASE=homework_dev
+      # Set a path where Postgres should store the data
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    restart: always
     volumes:
       - .:/app/
-    links:
-      - db
-    depends_on: 
-      - db

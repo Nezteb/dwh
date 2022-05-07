@@ -3,42 +3,33 @@
 ### Docker Development Commands
 
 .PHONY: docker
-docker: down
-	# You may want to rebuild the Docker container with "make build" before this
-	docker-compose up --detach --renew-anon-volumes
-	# Once the container is up, you can run the server with `make web` or tests with `make test`
-	# You can also start a shell using either `make shell-web` or `make shell-test`
-
-.PHONY: web
-web:
-	docker-compose exec web mix phx.server
+docker: down build
+	docker compose up --detach --renew-anon-volumes
+	# Once the container is up, it will start the server on its own
+	# You can run tests with `make test`
+	# You can also start a shell using `make shell`
 
 .PHONY: test
 test:
-	docker-compose exec test mix test
+	docker compose exec web mix test
 
-.PHONY: shell-web
-shell-web:
-	# After you have a shell, you can use `iex -S mix phx.server`
-	docker-compose exec web bash
-
-.PHONY: shell-test
-shell-test:
-	# After you have a shell, you can use `mix test`
-	docker-compose exec test bash
+.PHONY: shell
+shell:
+	# After you have a shell, you can use `iex -S mix run --no-start` or `mix test`
+	docker compose exec web bash
 
 .PHONY: down
 down:
-	docker-compose down --remove-orphans
+	docker compose down --remove-orphans
 
 .PHONY: build
 build:
-	docker-compose build
+	docker compose build
 
 .PHONY: stop
 stop: down
-	docker stop `docker ps -aq` || true
-	docker rm `docker ps -aq` || true
+	docker stop $(docker ps -aq) 2>/dev/null || true
+	docker rm $(docker ps -aq) 2>/dev/null || true
 
 .PHONY: dozzle
 dozzle: dozzle-stop
@@ -47,8 +38,8 @@ dozzle: dozzle-stop
 
 .PHONY: dozzle-stop
 dozzle-stop:
-	docker stop dozzle || true
-	docker rm dozzle || true
+	docker stop dozzle 2>/dev/null || true
+	docker rm dozzle 2>/dev/null || true
 
 ### Local Development Commands (or for use in your container)
 

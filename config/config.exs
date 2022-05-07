@@ -5,14 +5,16 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 config :homework,
   ecto_repos: [Homework.Repo]
 
+host = System.get_env("HOST") || "localhost"
+
 # Configures the endpoint
 config :homework, HomeworkWeb.Endpoint,
-  url: [host: System.get_env("HOST") || "localhost"],
+  url: [host: host],
   secret_key_base: "+IjyxgEncWjAVS+ARMn8qUGkijbmXyEp7YTevKL+sfe0dcpJmaaeNXFW8j/By5i9",
   render_errors: [view: HomeworkWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Homework.PubSub,

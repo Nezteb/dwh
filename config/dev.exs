@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 config :homework, Homework.Repo,
@@ -15,8 +15,10 @@ config :homework, Homework.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
+port = String.to_integer(System.get_env("PORT") || "8080")
+
 config :homework, HomeworkWeb.Endpoint,
-  http: [port: System.get_env("PORT") || 4000],
+  http: [ip: {0, 0, 0, 0}, port: port],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
