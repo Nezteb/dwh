@@ -4,9 +4,6 @@
 # remember to add this file to your .gitignore.
 import Config
 
-config :homework, HomeworkWeb.Endpoint, server: true
-# end
-
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
@@ -14,14 +11,13 @@ if config_env() == :prod do
       environment variable DATABASE_URL is missing.
       For example: ecto://USER:PASS@HOST/DATABASE
       """
-  
-  maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
       
   config :homework, Homework.Repo,
     # ssl: true,
+    # IMPORTANT: Or it won't find the DB server
+    socket_options: [:inet6],
     url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
   
   secret_key_base =
     System.get_env("SECRET_KEY_BASE") ||
@@ -30,15 +26,17 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
   
-  host =  System.get_env("HOST") || "localhost"
-  port = String.to_integer(System.get_env("PORT") || "8080")
+  app_name =
+    System.get_env("FLY_APP_NAME") ||
+      raise "FLY_APP_NAME not available"
+      
+  host =  "#{app_name}.fly.dev"
       
   config :homework, HomeworkWeb.Endpoint,
-    url: [host: host, port: port],
+    url: [host: host, port: 80],
     http: [
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port,
-      # transport_options: [socket_opts: [:inet6]]
+      port: String.to_integer(System.get_env("PORT") || "4000"),
     ],
     secret_key_base: secret_key_base
 end
@@ -48,7 +46,18 @@ end
 # If you are doing OTP releases, you need to instruct Phoenix
 # to start each relevant endpoint:
 #
-#     config :homework, HomeworkWeb.Endpoint, server: true
+config :homework, HomeworkWeb.Endpoint, server: true
+
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
+
+if config_env() == :dev do
+  database_url = System.get_env("DATABASE_URL")
+
+  if database_url != nil do
+    config :homework, Homework.Repo, 
+      url: database_url,
+      socket_options: [:inet6]
+  end
+end

@@ -5,23 +5,24 @@ services:
     build: .
     image: web:latest
     container_name: web
+    entrypoint: /app/entrypoint.sh
     ports:
-      - "8080:8080"
+      - "4000:4000"
     environment:
+      - FLY_APP_NAME=divvy-web-homework
       - MIX_ENV=dev
       - POSTGRES_HOST=db
-      - POSTGRES_DATABASE=homework_test
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - ./entrypoint.sh:/app/entrypoint.sh
-      - ./Makefile:/app/Makefile
-      - ./mix.exs:/app/mix.exs
-      - ./mix.lock:/app/mix.lock
-      - ./config:/app/config
-      - ./lib:/app/lib
-      - ./priv:/app/priv
-      - ./test:/app/test
+      - POSTGRES_DATABASE=homework_dev
+    # volumes:
+    #   - ./config:/app/config
+    #   - ./lib:/app/lib
+    #   - ./priv:/app/priv
+    #   - ./rel:/app/rel
+    #   - ./test:/app/test
+    #   - ./mix.exs:/app/mix.exs
+    #   - ./mix.lock:/app/mix.lock
     links:
       - db
     depends_on:
@@ -41,5 +42,3 @@ services:
       # Set a path where Postgres should store the data
       - PGDATA=/var/lib/postgresql/data/pgdata
     restart: always
-    volumes:
-      - .:/app/

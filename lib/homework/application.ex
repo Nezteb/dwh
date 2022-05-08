@@ -8,7 +8,7 @@ defmodule Homework.Application do
 
   def start(_type, _args) do
     # Print the env for troubleshooting purposes
-    Logger.info(Application.get_all_env(:homework))
+    IO.inspect(Application.get_all_env(:homework))
     
     children = [
       # Start the Ecto repository

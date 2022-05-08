@@ -6,10 +6,8 @@ kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
 
-[env]
-  # HOST = "nezteb.net"
-  MIX_ENV = "prod"
-  PORT = "8080"
+[deploy]
+  release_command = "/app/entry eval Homework.Release.migrate"
 
 [experimental]
   allowed_public_ports = []
@@ -17,7 +15,7 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = 8080
+  internal_port = 4000
   processes = ["app"]
   protocol = "tcp"
   script_checks = []
@@ -28,7 +26,7 @@ processes = []
     type = "connections"
 
   [[services.ports]]
-    force_https = true
+    # force_https = true
     handlers = ["http"]
     port = 80
 

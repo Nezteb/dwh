@@ -4,8 +4,8 @@ import Config
 config :homework, Homework.Repo,
   username: System.get_env("POSTGRES_USER") || "postgres",
   password: System.get_env("POSTGRES_PASSWORD") || "postgres",
-  hostname: System.get_env("POSTGRES_HOST") || "localhost",
   database: System.get_env("POSTGRES_DATABASE") || "homework_dev",
+  hostname: System.get_env("POSTGRES_HOST") || "db",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
@@ -15,13 +15,13 @@ config :homework, Homework.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-port = String.to_integer(System.get_env("PORT") || "8080")
+port = String.to_integer(System.get_env("PORT") || "4000")
 
 config :homework, HomeworkWeb.Endpoint,
-  http: [ip: {0, 0, 0, 0}, port: port],
-  debug_errors: true,
-  code_reloader: true,
+  http: [ip: {127, 0, 0, 0}, port: port],
   check_origin: false,
+  code_reloader: true,
+  debug_errors: true,
   watchers: []
 
 # ## SSL Support

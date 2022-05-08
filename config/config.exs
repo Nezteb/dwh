@@ -10,13 +10,11 @@ import Config
 config :homework,
   ecto_repos: [Homework.Repo]
 
-host = System.get_env("HOST") || "localhost"
-
 # Configures the endpoint
 config :homework, HomeworkWeb.Endpoint,
-  url: [host: host],
+  url: [host: "localhost"],
   secret_key_base: "+IjyxgEncWjAVS+ARMn8qUGkijbmXyEp7YTevKL+sfe0dcpJmaaeNXFW8j/By5i9",
-  render_errors: [view: HomeworkWeb.ErrorView, accepts: ~w(json), layout: false],
+  render_errors: [view: HomeworkWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Homework.PubSub,
   live_view: [signing_salt: "4Ka1Trkx"]
 

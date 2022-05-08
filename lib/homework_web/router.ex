@@ -11,6 +11,8 @@ defmodule HomeworkWeb.Router do
 
   scope "/" do
     pipe_through(:api)
+    
+    get "/", RootController, :index
 
     forward("/api", Absinthe.Plug, schema: HomeworkWeb.Schema)
 
